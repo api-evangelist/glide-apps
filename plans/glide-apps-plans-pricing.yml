@@ -1,0 +1,270 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Glide
+providerId: glide-apps
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: true
+tags:
+- No Code
+- App Builder
+- Tables
+- Big Tables
+- Data
+- Plans
+description: >-
+  Glide is priced by workspace plan, not by API call. Plans are tiered (Free,
+  Explorer, Maker, Business, Enterprise) and gate published apps, number of
+  users, included monthly Updates, and data scale (rows / Big Tables). An
+  "Update" is the core consumption unit - data edits and syncs from external
+  sources count against the plan's included Updates, with overage billed per
+  additional Update. REST API access to Big Tables (get rows, query with SQL)
+  requires a Business or Enterprise plan. Prices below reflect the pricing model
+  effective November 1, 2025; annual billing saves roughly 20% versus monthly.
+notes: >-
+  Verify exact prices, included Updates, user counts, and row limits on the
+  Glide pricing page during reconciliation; figures shift between annual and
+  monthly billing and Glide periodically revises tiers.
+sources:
+- https://www.glideapps.com/pricing
+- https://www.glideapps.com/docs/using-glide-tables-api
+- https://www.glideapps.com/docs/getting-started-with-the-glide-api
+plans:
+- id: glide-free
+  name: Free
+  type: free
+  description: >-
+    Build unlimited draft apps with a single editor. Intended for prototyping;
+    no public REST API querying of Big Tables.
+  entries:
+  - label: Editors
+    name: editors
+    type: flat
+    metric: users
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0
+    userMultiplied: false
+  - label: Published Apps
+    name: published_apps
+    type: flat
+    metric: apps
+    limit: 0
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0
+    userMultiplied: false
+  - label: Rows
+    name: rows
+    type: flat
+    metric: rows
+    limit: 25000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  elements:
+  - name: Draft Apps
+  - name: Glide Tables
+- id: glide-explorer
+  name: Explorer
+  type: paid
+  description: >-
+    Entry paid tier for a single published app with a modest monthly Updates
+    allowance.
+  entries:
+  - label: Price
+    name: explorer_price
+    type: flat
+    metric: subscription
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: ~$19-$25/month
+    userMultiplied: false
+  - label: Published Apps
+    name: published_apps
+    type: flat
+    metric: apps
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Included Updates
+    name: included_updates
+    type: flat
+    metric: updates
+    limit: 250
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Additional Updates
+    name: overage_updates
+    type: usage
+    metric: updates
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.02 per update
+    userMultiplied: false
+  elements:
+  - name: Published App
+  - name: Glide Tables
+- id: glide-maker
+  name: Maker
+  type: paid
+  description: >-
+    For makers shipping a few apps with a larger Updates allowance and
+    unlimited personal users.
+  entries:
+  - label: Price
+    name: maker_price
+    type: flat
+    metric: subscription
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: ~$49-$60/month
+    userMultiplied: false
+  - label: Published Apps
+    name: published_apps
+    type: flat
+    metric: apps
+    limit: 3
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Included Updates
+    name: included_updates
+    type: flat
+    metric: updates
+    limit: 500
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Additional Updates
+    name: overage_updates
+    type: usage
+    metric: updates
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.02 per update
+    userMultiplied: false
+  elements:
+  - name: Published Apps
+  - name: Glide Tables
+- id: glide-business
+  name: Business
+  type: paid
+  description: >-
+    For teams that need API access, more users, and higher data scale. Unlocks
+    REST API get-rows and SQL querying of Big Tables.
+  entries:
+  - label: Price
+    name: business_price
+    type: flat
+    metric: subscription
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: from ~$199/month (annual) / ~$249/month (monthly)
+    userMultiplied: false
+  - label: Included Users
+    name: included_users
+    type: flat
+    metric: users
+    limit: 30
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Additional Users
+    name: overage_users
+    type: usage
+    metric: users
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $5/user (annual) / $6/user (monthly)
+    userMultiplied: true
+  - label: Included Updates
+    name: included_updates
+    type: flat
+    metric: updates
+    limit: 5000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Additional Updates
+    name: overage_updates
+    type: usage
+    metric: updates
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.02 per update
+    userMultiplied: false
+  - label: Big Table Rows
+    name: rows
+    type: flat
+    metric: rows
+    limit: 100000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  elements:
+  - name: Unlimited Published Apps
+  - name: Big Tables
+  - name: REST API (Get Rows + SQL Queries)
+- id: glide-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Custom plan for scale, security, and governance - SSO, data backups,
+    dedicated account management, and negotiated data/user/Update limits.
+    Contact Glide sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales (commonly from ~$750/month)
+    userMultiplied: false
+  elements:
+  - name: SSO
+  - name: Data Backups
+  - name: Dedicated Account Manager
+  - name: REST API (Get Rows + SQL Queries)
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

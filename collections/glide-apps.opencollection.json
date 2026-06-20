@@ -1,0 +1,203 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Glide API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Big Tables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.glideapps.com/tables"
+          },
+          "docs": "List Big Tables"
+        },
+        {
+          "info": {
+            "name": "Create a Big Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.glideapps.com/tables",
+            "body": {
+              "type": "json",
+              "data": "{\"name\": \"<string>\", \"schema\": {\"columns\": [{\"id\": \"<string>\", \"type\": \"string\", \"name\": \"<string>\"}]}, \"rows\": [{}]}"
+            }
+          },
+          "docs": "Create a Big Table"
+        },
+        {
+          "info": {
+            "name": "Overwrite a Big Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.glideapps.com/tables/{tableID}",
+            "body": {
+              "type": "json",
+              "data": "{\"schema\": {\"columns\": [{\"id\": \"<string>\", \"type\": \"string\", \"name\": \"<string>\"}]}, \"rows\": [{}]}"
+            }
+          },
+          "docs": "Overwrite a Big Table"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Rows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get rows version",
+            "type": "http"
+          },
+          "http": {
+            "method": "HEAD",
+            "url": "https://api.glideapps.com/tables/{tableID}/rows"
+          },
+          "docs": "Get rows version"
+        },
+        {
+          "info": {
+            "name": "Get rows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.glideapps.com/tables/{tableID}/rows"
+          },
+          "docs": "Get rows"
+        },
+        {
+          "info": {
+            "name": "Add rows",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.glideapps.com/tables/{tableID}/rows",
+            "body": {
+              "type": "json",
+              "data": "{\"rows\": [{}]}"
+            }
+          },
+          "docs": "Add rows"
+        },
+        {
+          "info": {
+            "name": "Get a row",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.glideapps.com/tables/{tableID}/rows/{rowID}"
+          },
+          "docs": "Get a row"
+        },
+        {
+          "info": {
+            "name": "Update a row",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.glideapps.com/tables/{tableID}/rows/{rowID}",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a row"
+        },
+        {
+          "info": {
+            "name": "Delete a row",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.glideapps.com/tables/{tableID}/rows/{rowID}"
+          },
+          "docs": "Delete a row"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Queries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query a Big Table with SQL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.glideapps.com/tables/{tableID}/queries",
+            "body": {
+              "type": "json",
+              "data": "{\"sql\": \"SELECT * FROM data WHERE status = ? AND amount > ?\", \"params\": [\"<string>\", 0]}"
+            }
+          },
+          "docs": "Query a Big Table with SQL"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stashes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Set a stash chunk",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.glideapps.com/stashes/{stashID}/{serial}",
+            "body": {
+              "type": "json",
+              "data": "[{}]"
+            }
+          },
+          "docs": "Set a stash chunk"
+        },
+        {
+          "info": {
+            "name": "Delete a stash",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.glideapps.com/stashes/{stashID}"
+          },
+          "docs": "Delete a stash"
+        }
+      ]
+    }
+  ]
+}

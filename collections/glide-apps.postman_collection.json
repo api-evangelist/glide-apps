@@ -1,0 +1,427 @@
+{
+  "item": [
+    {
+      "id": "a8921a0a-8bba-45c1-be22-154cda100e90",
+      "name": "Tables",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2763878f-d765-484e-a1b4-c809dbbd0dcf",
+          "name": "List Big Tables",
+          "request": {
+            "name": "List Big Tables",
+            "url": {
+              "path": [
+                "tables"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null
+          },
+          "response": []
+        },
+        {
+          "id": "edafa7b5-222f-42b7-8590-d39a2b006898",
+          "name": "Create a Big Table",
+          "request": {
+            "name": "Create a Big Table",
+            "url": {
+              "path": [
+                "tables"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"schema\": {\n    \"columns\": [\n      {\n        \"id\": \"<string>\",\n        \"type\": \"string\",\n        \"name\": \"<string>\"\n      }\n    ]\n  },\n  \"rows\": [\n    {}\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "9e4c79be-e82d-4fc4-9fcb-a03c6b163507",
+          "name": "Overwrite a Big Table",
+          "request": {
+            "name": "Overwrite a Big Table",
+            "url": {
+              "path": [
+                "tables",
+                ":tableID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schema\": {\n    \"columns\": [\n      {\n        \"id\": \"<string>\",\n        \"type\": \"string\",\n        \"name\": \"<string>\"\n      }\n    ]\n  },\n  \"rows\": [\n    {}\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "id": "dd0bcb3a-7e4b-40b0-87d7-f498d58d3afb",
+      "name": "Rows",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "86128d49-c7b8-4f85-ad87-612527923044",
+          "name": "Get rows version",
+          "request": {
+            "name": "Get rows version",
+            "url": {
+              "path": [
+                "tables",
+                ":tableID",
+                "rows"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "HEAD",
+            "auth": null
+          },
+          "response": []
+        },
+        {
+          "id": "81416444-0ee0-4bc3-a857-464e88d16a95",
+          "name": "Get rows",
+          "request": {
+            "name": "Get rows",
+            "url": {
+              "path": [
+                "tables",
+                ":tableID",
+                "rows"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null
+          },
+          "response": []
+        },
+        {
+          "id": "38f53b94-ea5e-412a-99a3-15b556f8089e",
+          "name": "Add rows",
+          "request": {
+            "name": "Add rows",
+            "url": {
+              "path": [
+                "tables",
+                ":tableID",
+                "rows"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rows\": [\n    {}\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "bd6595e9-48c9-4c8c-9aaa-c01b4d082ef4",
+          "name": "Get a row",
+          "request": {
+            "name": "Get a row",
+            "url": {
+              "path": [
+                "tables",
+                ":tableID",
+                "rows",
+                ":rowID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null
+          },
+          "response": []
+        },
+        {
+          "id": "fb7a8b9f-a381-4ca9-92f8-6d01371eb4f9",
+          "name": "Update a row",
+          "request": {
+            "name": "Update a row",
+            "url": {
+              "path": [
+                "tables",
+                ":tableID",
+                "rows",
+                ":rowID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "77a45d1b-2b2c-4dde-8d59-b454137e2772",
+          "name": "Delete a row",
+          "request": {
+            "name": "Delete a row",
+            "url": {
+              "path": [
+                "tables",
+                ":tableID",
+                "rows",
+                ":rowID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "id": "760aa405-8f37-403e-ae06-1fd83f890b27",
+      "name": "Queries",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "10ee7230-e28c-460a-a1ab-2df33d7bd0a2",
+          "name": "Query a Big Table with SQL",
+          "request": {
+            "name": "Query a Big Table with SQL",
+            "url": {
+              "path": [
+                "tables",
+                ":tableID",
+                "queries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sql\": \"SELECT * FROM data WHERE status = ? AND amount > ?\",\n  \"params\": [\n    \"<string>\",\n    0\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "id": "617b840c-eab7-4b52-b09d-e18c5b87e267",
+      "name": "Stashes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "143f9e6d-ba95-4440-8662-a701a24ce00d",
+          "name": "Set a stash chunk",
+          "request": {
+            "name": "Set a stash chunk",
+            "url": {
+              "path": [
+                "stashes",
+                ":stashID",
+                ":serial"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {}\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "8e227167-5837-4f51-bbc6-1caa8ac54f1c",
+          "name": "Delete a stash",
+          "request": {
+            "name": "Delete a stash",
+            "url": {
+              "path": [
+                "stashes",
+                ":stashID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.glideapps.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "67053919-cfcd-4a48-8921-324acc0ed75f",
+    "name": "Glide API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Glide REST API (v2) for Glide Big Tables: tables, rows, queries, and stashes. Authenticate with a Glide team API token via Authorization: Bearer.\n\nContact Support:\n Name: Glide Support\n URL: https://www.glideapps.com/docs",
+      "type": "text/plain"
+    }
+  }
+}

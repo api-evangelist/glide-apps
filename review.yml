@@ -1,0 +1,70 @@
+aid: glide-apps
+name: Glide
+review:
+  question: Does Glide expose a documented public WebSocket or streaming API?
+  answer: false
+  date: '2026-06-20'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    Per API Evangelist scope, HTTP Server-Sent Events (SSE) is in-scope for
+    AsyncAPI modeling and WebSocket would be. Glide's documented v2 REST API
+    for Big Tables exposes neither SSE nor WebSocket - change detection is
+    done with a synchronous HEAD request returning an ETag, not a push
+    stream - so no AsyncAPI document was created.
+findings:
+  summary: |
+    Glide does not publish a documented public WebSocket or streaming API. The
+    Glide API v2 is a synchronous REST (HTTPS) interface under
+    https://api.glideapps.com operating at the team level against Glide Big
+    Tables. Clients detect data changes by polling: a HEAD on
+    /tables/{tableID}/rows returns the current data version in an ETag header,
+    and GET pages through rows with a continuation token (max 10,000 rows per
+    response). There is no documented realtime, push, SSE, or WebSocket
+    (ws:// / wss://) surface for rows, tables, queries, or stashes.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.glideapps.com
+      documented: true
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: No Server-Sent Events surface is documented; change detection is poll-based via HEAD/ETag.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Glide's API reference for tables, rows, queries, or stashes as of the review date.
+  endpointsConfirmedRest:
+    - GET    https://api.glideapps.com/tables
+    - POST   https://api.glideapps.com/tables
+    - PUT    https://api.glideapps.com/tables/{tableID}
+    - HEAD   https://api.glideapps.com/tables/{tableID}/rows
+    - GET    https://api.glideapps.com/tables/{tableID}/rows
+    - POST   https://api.glideapps.com/tables/{tableID}/rows
+    - GET    https://api.glideapps.com/tables/{tableID}/rows/{rowID}
+    - PATCH  https://api.glideapps.com/tables/{tableID}/rows/{rowID}
+    - DELETE https://api.glideapps.com/tables/{tableID}/rows/{rowID}
+    - POST   https://api.glideapps.com/tables/{tableID}/queries
+    - PUT    https://api.glideapps.com/stashes/{stashID}/{serial}
+    - DELETE https://api.glideapps.com/stashes/{stashID}
+sources:
+  - url: https://www.glideapps.com/docs/using-glide-tables-api
+    type: Documentation
+    note: Describes the Tables API as REST over HTTPS with Bearer token auth.
+  - url: https://apidocs.glideapps.com/api-reference/v2
+    type: APIReference
+    note: All documented v2 endpoints are HTTPS REST; no WebSocket or SSE channel listed.
+  - url: https://www.glideapps.com/docs/getting-started-with-the-glide-api
+    type: Documentation
+    note: SQL querying of Big Tables is a synchronous POST; no streaming transport.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or SSE protocol surface exists for Glide. Change detection is
+    poll-based (HEAD + ETag), so no AsyncAPI document was authored. The apis.yml
+    catalog reflects only REST surfaces (Tables, Rows, Stash/Bulk, Queries).
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

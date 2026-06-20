@@ -1,0 +1,67 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Glide
+providerId: glide-apps
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- No Code
+- App Builder
+- Tables
+- Big Tables
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  The Glide REST API constrains usage through response-size limits and
+  plan-based consumption rather than published per-second request quotas. The
+  Get Rows endpoint returns at most 10,000 rows per response and uses a
+  continuation token for further pages. Data changes made through the API count
+  as Updates against the workspace plan's monthly Updates allowance, so the
+  effective throughput ceiling is governed by the plan tier (REST get-rows and
+  SQL querying require Business or Enterprise). Specific per-minute request
+  thresholds are not publicly documented.
+notes: >-
+  Confirm any per-request or per-minute throttling thresholds and the current
+  page-size cap in the Glide API reference at reconciliation; the dominant
+  practical limit is the plan's included Updates and the 10K-rows-per-response
+  pagination cap.
+sources:
+- https://www.glideapps.com/docs/using-glide-tables-api
+- https://apidocs.glideapps.com/api-reference/v2
+- https://www.glideapps.com/pricing
+responseCodes:
+  throttled: 429
+limits:
+- name: Rows Per Response
+  scope: request
+  metric: rows
+  limit: 10000
+  notes: Maximum rows returned by Get Rows in a single response; use the continuation token for more.
+- name: Monthly Updates Allowance
+  scope: account
+  metric: updates
+  limit: plan-dependent
+  notes: API-driven data changes consume the plan's included Updates (250 / 500 / 5,000 / custom); overage billed at $0.02 per Update.
+- name: API Access Tier
+  scope: account
+  metric: capability
+  limit: Business and Enterprise only
+  notes: Get Rows and SQL querying of Big Tables require a Business or Enterprise plan.
+- name: Per-Minute Request Rate
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: No public per-minute request quota is documented; clients should backoff on 429.
+policies:
+- name: Pagination
+  description: Get Rows returns a continuation token when results exceed 10,000 rows; resubmit with the token to page through.
+- name: Backoff Strategy
+  description: On HTTP 429 clients should implement exponential backoff with jitter and retry.
+- name: Plan-Gated Throughput
+  description: Effective sustained throughput is bounded by the workspace plan's monthly Updates allowance.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

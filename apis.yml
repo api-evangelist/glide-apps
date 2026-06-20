@@ -1,0 +1,130 @@
+aid: glide-apps
+url: https://raw.githubusercontent.com/api-evangelist/glide-apps/refs/heads/main/apis.yml
+name: Glide
+kind: company
+description: Glide is a no-code platform for building custom business apps from your
+  data. The Glide REST API (v2) lets you programmatically work with Glide Big Tables -
+  creating tables, listing and paginating rows, adding, updating, and deleting rows,
+  staging large batches with stashes, and querying tables with SQL - using a Bearer
+  API token.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- No Code
+- App Builder
+- Tables
+- Big Tables
+- Data
+- AI
+created: '2026-06-20'
+modified: '2026-06-20'
+specificationVersion: '0.19'
+apis:
+- aid: glide-apps:glide-apps-tables-api
+  name: Glide Tables API
+  tags:
+  - Tables
+  - Big Tables
+  - Schema
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://apidocs.glideapps.com/api-reference/v2
+  baseURL: https://api.glideapps.com
+  properties:
+  - url: https://www.glideapps.com/docs/using-glide-tables-api
+    type: Documentation
+  - url: https://apidocs.glideapps.com/api-reference/v2/tables/post-tables
+    type: APIReference
+  - url: openapi/glide-apps-openapi.yml
+    type: OpenAPI
+  - url: collections/glide-apps.postman_collection.json
+    type: PostmanCollection
+  - url: collections/glide-apps.opencollection.json
+    type: OpenCollection
+  description: Create and overwrite Glide Big Tables in a team, defining columns and
+    optionally seeding data, and discover the tables available to an API token.
+- aid: glide-apps:glide-apps-rows-api
+  name: Glide Big Tables Rows API
+  tags:
+  - Rows
+  - CRUD
+  - Pagination
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://apidocs.glideapps.com/api-reference/v2
+  baseURL: https://api.glideapps.com
+  properties:
+  - url: https://www.glideapps.com/docs/using-glide-tables-api
+    type: Documentation
+  - url: https://apidocs.glideapps.com/api-reference/v2
+    type: APIReference
+  - url: openapi/glide-apps-openapi.yml
+    type: OpenAPI
+  - url: collections/glide-apps.postman_collection.json
+    type: PostmanCollection
+  - url: collections/glide-apps.opencollection.json
+    type: OpenCollection
+  description: List rows from a Big Table with continuation-token pagination (max 10K
+    rows per response), read a single row by ID, add rows, patch an existing row, and
+    delete a row, with optional ETag/If-Match data versioning.
+- aid: glide-apps:glide-apps-stash-api
+  name: Glide Stash & Bulk API
+  tags:
+  - Stash
+  - Bulk
+  - Batch
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://apidocs.glideapps.com/api-reference/v2
+  baseURL: https://api.glideapps.com
+  properties:
+  - url: https://www.glideapps.com/docs/using-glide-tables-api
+    type: Documentation
+  - url: https://apidocs.glideapps.com/api-reference/v2
+    type: APIReference
+  - url: openapi/glide-apps-openapi.yml
+    type: OpenAPI
+  - url: collections/glide-apps.postman_collection.json
+    type: PostmanCollection
+  - url: collections/glide-apps.opencollection.json
+    type: OpenCollection
+  description: Stage large data payloads in serial chunks via stashes, then reference
+    the stash when creating a table or adding rows so very large batches can be loaded
+    without oversized request bodies; delete a stash when finished.
+- aid: glide-apps:glide-apps-queries-api
+  name: Glide Queries API
+  tags:
+  - Queries
+  - SQL
+  - Filter
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://apidocs.glideapps.com/api-reference/v2
+  baseURL: https://api.glideapps.com
+  properties:
+  - url: https://www.glideapps.com/docs/getting-started-with-the-glide-api
+    type: Documentation
+  - url: https://apidocs.glideapps.com/api-reference/v2
+    type: APIReference
+  - url: openapi/glide-apps-openapi.yml
+    type: OpenAPI
+  - url: collections/glide-apps.postman_collection.json
+    type: PostmanCollection
+  - url: collections/glide-apps.opencollection.json
+    type: OpenCollection
+  description: Query a Big Table with SQL (SELECT with WHERE/AND/OR and parameter binding)
+    to retrieve filtered, server-side result sets, with continuation support for large
+    results. Available on Business and Enterprise plans.
+common:
+- type: GitHubOrganization
+  url: https://github.com/glideapps
+- type: LinkedIn
+  url: https://www.linkedin.com/company/glideapps
+- type: Website
+  url: https://www.glideapps.com
+- type: Documentation
+  url: https://www.glideapps.com/docs
+- type: Plans
+  url: plans/glide-apps-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/glide-apps-rate-limits.yml
+- type: FinOps
+  url: finops/glide-apps-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

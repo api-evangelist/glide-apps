@@ -1,0 +1,18 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://www.glideapps.com/security-center
+url: https://www.glideapps.com/security-center
+certifications:
+- SOC 2
+- ISO 27001
+- FedRAMP
+- GDPR
+evidence:
+- source: https://www.glideapps.com/security-center
+  keywords:
+  - soc 2
+  - iso 27001
+  - fedramp
+  - trust center
+  - gdpr

@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/glide-apps-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: 'Glide team API token passed as `Authorization: Bearer <token>`. Tokens are created
+    in the Glide team settings.'
+  sources:
+  - openapi/glide-apps-openapi.yml

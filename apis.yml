@@ -111,6 +111,12 @@ apis:
     to retrieve filtered, server-side result sets, with continuation support for large
     results. Available on Business and Enterprise plans.
 common:
+- type: TrustCenter
+  url: security/glide-apps-trust-center.yml
+- type: DomainSecurity
+  url: security/glide-apps-domain-security.yml
+- type: Authentication
+  url: authentication/glide-apps-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/glideapps
 - type: LinkedIn
@@ -125,6 +131,8 @@ common:
   url: rate-limits/glide-apps-rate-limits.yml
 - type: FinOps
   url: finops/glide-apps-finops.yml
+- type: Blog
+  url: https://www.glideapps.com/blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

@@ -111,6 +111,8 @@ apis:
     to retrieve filtered, server-side result sets, with continuation support for large
     results. Available on Business and Enterprise plans.
 common:
+- type: AgenticAccess
+  url: agentic-access/glide-apps-agentic-access.yml
 - type: TrustCenter
   url: security/glide-apps-trust-center.yml
 - type: DomainSecurity

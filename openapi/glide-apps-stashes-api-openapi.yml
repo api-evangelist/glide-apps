@@ -1,0 +1,114 @@
+openapi: 3.0.1
+info:
+  title: Glide Queries Stashes API
+  description: The Glide REST API (v2) for working with Glide Big Tables. Create and overwrite tables, list and paginate rows, read a single row, add rows, update and delete rows, stage large batches with stashes, and query tables with SQL. All requests are authenticated with a Bearer API token issued from the Glide team settings. The API operates at the team level and works with Glide Big Tables.
+  termsOfService: https://www.glideapps.com/legal/terms-of-service
+  contact:
+    name: Glide Support
+    url: https://www.glideapps.com/docs
+  version: '2.0'
+servers:
+- url: https://api.glideapps.com
+  description: Glide REST API v2
+security:
+- bearerAuth: []
+tags:
+- name: Stashes
+  description: Stage large data payloads in serial chunks for bulk loads.
+paths:
+  /stashes/{stashID}/{serial}:
+    put:
+      operationId: setStashChunk
+      tags:
+      - Stashes
+      summary: Set a stash chunk
+      description: Sets the content of a chunk of data inside a stash, identified by a serial number. Large data sets are uploaded as a sequence of serial chunks and then referenced by stash ID when creating a table or adding rows. Accepts JSON, CSV, or TSV bodies.
+      parameters:
+      - $ref: '#/components/parameters/StashID'
+      - name: serial
+        in: path
+        required: true
+        description: Zero-based serial number of this chunk within the stash.
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/RowValues'
+          text/csv:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: The chunk was stored.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /stashes/{stashID}:
+    delete:
+      operationId: deleteStash
+      tags:
+      - Stashes
+      summary: Delete a stash
+      description: Deletes a stash and all of its staged data.
+      parameters:
+      - $ref: '#/components/parameters/StashID'
+      responses:
+        '200':
+          description: The stash was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    StashID:
+      name: stashID
+      in: path
+      required: true
+      description: Client-generated identifier for the stash.
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable description of the error.
+        code:
+          type: string
+          description: A machine-readable error code.
+    RowValues:
+      type: object
+      description: A map of column ID to value for a row. Values are typed according to the column definition.
+      additionalProperties: true
+  responses:
+    Unauthorized:
+      description: The API token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Glide team API token passed as `Authorization: Bearer <token>`. Tokens are created in the Glide team settings.'

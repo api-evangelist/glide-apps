@@ -1,0 +1,125 @@
+openapi: 3.0.1
+info:
+  title: Glide Queries API
+  description: The Glide REST API (v2) for working with Glide Big Tables. Create and overwrite tables, list and paginate rows, read a single row, add rows, update and delete rows, stage large batches with stashes, and query tables with SQL. All requests are authenticated with a Bearer API token issued from the Glide team settings. The API operates at the team level and works with Glide Big Tables.
+  termsOfService: https://www.glideapps.com/legal/terms-of-service
+  contact:
+    name: Glide Support
+    url: https://www.glideapps.com/docs
+  version: '2.0'
+servers:
+- url: https://api.glideapps.com
+  description: Glide REST API v2
+security:
+- bearerAuth: []
+tags:
+- name: Queries
+  description: Query a Big Table with SQL.
+paths:
+  /tables/{tableID}/queries:
+    post:
+      operationId: queryTable
+      tags:
+      - Queries
+      summary: Query a Big Table with SQL
+      description: Runs a SQL query (SELECT with WHERE/AND/OR and optional parameter binding) against a Big Table and returns the matching rows. When a result set exceeds the response limit a continuation token is returned. Available on Business and Enterprise plans.
+      parameters:
+      - $ref: '#/components/parameters/TableID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: The query results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RowsPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable description of the error.
+        code:
+          type: string
+          description: A machine-readable error code.
+    QueryRequest:
+      type: object
+      description: A SQL query against a Big Table.
+      properties:
+        sql:
+          type: string
+          description: The SQL SELECT statement to run against the table.
+          example: SELECT * FROM data WHERE status = ? AND amount > ?
+        params:
+          type: array
+          description: Positional parameters bound to the placeholders in the SQL statement, in order.
+          items: {}
+        startAt:
+          type: string
+          description: Continuation token from a prior query that did not return all rows.
+      required:
+      - sql
+    Row:
+      type: object
+      description: A row in a Big Table, including its row ID.
+      properties:
+        $rowID:
+          type: string
+          description: The unique row identifier.
+      additionalProperties: true
+    RowsPage:
+      type: object
+      description: A page of rows with an optional continuation token.
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Row'
+        next:
+          type: string
+          description: Continuation token to retrieve the next page; absent when no further rows remain.
+  responses:
+    Unauthorized:
+      description: The API token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    TableID:
+      name: tableID
+      in: path
+      required: true
+      description: The ID of the Big Table.
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Glide team API token passed as `Authorization: Bearer <token>`. Tokens are created in the Glide team settings.'

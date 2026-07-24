@@ -1,0 +1,264 @@
+openapi: 3.0.1
+info:
+  title: Glide Queries Rows API
+  description: The Glide REST API (v2) for working with Glide Big Tables. Create and overwrite tables, list and paginate rows, read a single row, add rows, update and delete rows, stage large batches with stashes, and query tables with SQL. All requests are authenticated with a Bearer API token issued from the Glide team settings. The API operates at the team level and works with Glide Big Tables.
+  termsOfService: https://www.glideapps.com/legal/terms-of-service
+  contact:
+    name: Glide Support
+    url: https://www.glideapps.com/docs
+  version: '2.0'
+servers:
+- url: https://api.glideapps.com
+  description: Glide REST API v2
+security:
+- bearerAuth: []
+tags:
+- name: Rows
+  description: List, read, add, update, and delete rows in a Big Table.
+paths:
+  /tables/{tableID}/rows:
+    head:
+      operationId: getRowsVersion
+      tags:
+      - Rows
+      summary: Get rows version
+      description: Returns the current data version of the table in an ETag response header without returning the row bodies, so clients can cheaply detect whether the data has changed.
+      parameters:
+      - $ref: '#/components/parameters/TableID'
+      responses:
+        '200':
+          description: Current version returned in the ETag header.
+          headers:
+            ETag:
+              description: Opaque version identifier for the table's current data.
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    get:
+      operationId: getRows
+      tags:
+      - Rows
+      summary: Get rows
+      description: Returns rows from a Big Table. A maximum of 10,000 rows are returned per response; when more rows exist a continuation token is included that can be passed back to retrieve the next page.
+      parameters:
+      - $ref: '#/components/parameters/TableID'
+      - name: continuation
+        in: query
+        required: false
+        description: Continuation token returned by a previous call to retrieve the next page.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A page of rows.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RowsPage'
+          headers:
+            ETag:
+              description: Opaque version identifier for the table's current data.
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: addRows
+      tags:
+      - Rows
+      summary: Add rows
+      description: Adds one or more rows to a Big Table. Rows may be provided inline or referenced from a previously populated stash for large batches. Returns the IDs of the rows that were added.
+      parameters:
+      - $ref: '#/components/parameters/TableID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRowsRequest'
+      responses:
+        '200':
+          description: The rows were added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddRowsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tables/{tableID}/rows/{rowID}:
+    get:
+      operationId: getRow
+      tags:
+      - Rows
+      summary: Get a row
+      description: Returns a single row from a Big Table by its row ID.
+      parameters:
+      - $ref: '#/components/parameters/TableID'
+      - $ref: '#/components/parameters/RowID'
+      responses:
+        '200':
+          description: The requested row.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Row'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateRow
+      tags:
+      - Rows
+      summary: Update a row
+      description: Updates the values of an existing row. Only the provided columns are changed. An If-Match header carrying a prior ETag may be supplied for optimistic concurrency control.
+      parameters:
+      - $ref: '#/components/parameters/TableID'
+      - $ref: '#/components/parameters/RowID'
+      - name: If-Match
+        in: header
+        required: false
+        description: ETag from a prior read; the update is rejected if the data has changed.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRowRequest'
+      responses:
+        '200':
+          description: The row was updated.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '412':
+          description: Precondition failed - the If-Match version no longer matches.
+    delete:
+      operationId: deleteRow
+      tags:
+      - Rows
+      summary: Delete a row
+      description: Deletes a single row from a Big Table by its row ID.
+      parameters:
+      - $ref: '#/components/parameters/TableID'
+      - $ref: '#/components/parameters/RowID'
+      responses:
+        '200':
+          description: The row was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    AddRowsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              rowID:
+                type: string
+                description: The ID of an added row.
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable description of the error.
+        code:
+          type: string
+          description: A machine-readable error code.
+    Row:
+      type: object
+      description: A row in a Big Table, including its row ID.
+      properties:
+        $rowID:
+          type: string
+          description: The unique row identifier.
+      additionalProperties: true
+    UpdateRowRequest:
+      type: object
+      description: A map of column ID to new value for the columns being updated.
+      additionalProperties: true
+    RowValues:
+      type: object
+      description: A map of column ID to value for a row. Values are typed according to the column definition.
+      additionalProperties: true
+    RowsPage:
+      type: object
+      description: A page of rows with an optional continuation token.
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Row'
+        next:
+          type: string
+          description: Continuation token to retrieve the next page; absent when no further rows remain.
+    AddRowsRequest:
+      type: object
+      description: Request body for adding rows to a Big Table.
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/RowValues'
+        $stashID:
+          type: string
+          description: Optional stash ID to source rows from instead of inline rows.
+  parameters:
+    RowID:
+      name: rowID
+      in: path
+      required: true
+      description: The ID of the row.
+      schema:
+        type: string
+    TableID:
+      name: tableID
+      in: path
+      required: true
+      description: The ID of the Big Table.
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: The API token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Glide team API token passed as `Authorization: Bearer <token>`. Tokens are created in the Glide team settings.'

@@ -1,0 +1,20 @@
+{
+  "provider": "glide-apps",
+  "sources": [
+    "glide-apps-queries-api-openapi.yml",
+    "glide-apps-rows-api-openapi.yml",
+    "glide-apps-stashes-api-openapi.yml",
+    "glide-apps-tables-api-openapi.yml"
+  ],
+  "outputs": [
+    "glide-apps-queries-api-openapi.yml",
+    "glide-apps-rows-api-openapi.yml",
+    "glide-apps-stashes-api-openapi.yml",
+    "glide-apps-tables-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

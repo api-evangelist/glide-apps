@@ -1,0 +1,563 @@
+openapi: 3.0.1
+info:
+  title: Glide API
+  description: >-
+    The Glide REST API (v2) for working with Glide Big Tables. Create and
+    overwrite tables, list and paginate rows, read a single row, add rows,
+    update and delete rows, stage large batches with stashes, and query tables
+    with SQL. All requests are authenticated with a Bearer API token issued from
+    the Glide team settings. The API operates at the team level and works with
+    Glide Big Tables.
+  termsOfService: https://www.glideapps.com/legal/terms-of-service
+  contact:
+    name: Glide Support
+    url: https://www.glideapps.com/docs
+  version: '2.0'
+servers:
+  - url: https://api.glideapps.com
+    description: Glide REST API v2
+security:
+  - bearerAuth: []
+tags:
+  - name: Tables
+    description: Create, overwrite, and list Big Tables.
+  - name: Rows
+    description: List, read, add, update, and delete rows in a Big Table.
+  - name: Stashes
+    description: Stage large data payloads in serial chunks for bulk loads.
+  - name: Queries
+    description: Query a Big Table with SQL.
+paths:
+  /tables:
+    get:
+      operationId: listTables
+      tags:
+        - Tables
+      summary: List Big Tables
+      description: Returns all Big Tables in the team associated with the API token.
+      responses:
+        '200':
+          description: A list of Big Tables.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Table'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createTable
+      tags:
+        - Tables
+      summary: Create a Big Table
+      description: >-
+        Creates a new Big Table with the provided name, column schema, and
+        optional seed rows. Rows may be provided inline or referenced from a
+        previously populated stash. Returns the new table ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTableRequest'
+      responses:
+        '201':
+          description: The Big Table was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tables/{tableID}:
+    put:
+      operationId: overwriteTable
+      tags:
+        - Tables
+      summary: Overwrite a Big Table
+      description: >-
+        Replaces the schema and/or data of an existing Big Table. Rows may be
+        provided inline or referenced from a stash.
+      parameters:
+        - $ref: '#/components/parameters/TableID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OverwriteTableRequest'
+      responses:
+        '200':
+          description: The Big Table was overwritten.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tables/{tableID}/rows:
+    head:
+      operationId: getRowsVersion
+      tags:
+        - Rows
+      summary: Get rows version
+      description: >-
+        Returns the current data version of the table in an ETag response
+        header without returning the row bodies, so clients can cheaply detect
+        whether the data has changed.
+      parameters:
+        - $ref: '#/components/parameters/TableID'
+      responses:
+        '200':
+          description: Current version returned in the ETag header.
+          headers:
+            ETag:
+              description: Opaque version identifier for the table's current data.
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    get:
+      operationId: getRows
+      tags:
+        - Rows
+      summary: Get rows
+      description: >-
+        Returns rows from a Big Table. A maximum of 10,000 rows are returned per
+        response; when more rows exist a continuation token is included that can
+        be passed back to retrieve the next page.
+      parameters:
+        - $ref: '#/components/parameters/TableID'
+        - name: continuation
+          in: query
+          required: false
+          description: Continuation token returned by a previous call to retrieve the next page.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A page of rows.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RowsPage'
+          headers:
+            ETag:
+              description: Opaque version identifier for the table's current data.
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: addRows
+      tags:
+        - Rows
+      summary: Add rows
+      description: >-
+        Adds one or more rows to a Big Table. Rows may be provided inline or
+        referenced from a previously populated stash for large batches. Returns
+        the IDs of the rows that were added.
+      parameters:
+        - $ref: '#/components/parameters/TableID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRowsRequest'
+      responses:
+        '200':
+          description: The rows were added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddRowsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tables/{tableID}/rows/{rowID}:
+    get:
+      operationId: getRow
+      tags:
+        - Rows
+      summary: Get a row
+      description: Returns a single row from a Big Table by its row ID.
+      parameters:
+        - $ref: '#/components/parameters/TableID'
+        - $ref: '#/components/parameters/RowID'
+      responses:
+        '200':
+          description: The requested row.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Row'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateRow
+      tags:
+        - Rows
+      summary: Update a row
+      description: >-
+        Updates the values of an existing row. Only the provided columns are
+        changed. An If-Match header carrying a prior ETag may be supplied for
+        optimistic concurrency control.
+      parameters:
+        - $ref: '#/components/parameters/TableID'
+        - $ref: '#/components/parameters/RowID'
+        - name: If-Match
+          in: header
+          required: false
+          description: ETag from a prior read; the update is rejected if the data has changed.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRowRequest'
+      responses:
+        '200':
+          description: The row was updated.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '412':
+          description: Precondition failed - the If-Match version no longer matches.
+    delete:
+      operationId: deleteRow
+      tags:
+        - Rows
+      summary: Delete a row
+      description: Deletes a single row from a Big Table by its row ID.
+      parameters:
+        - $ref: '#/components/parameters/TableID'
+        - $ref: '#/components/parameters/RowID'
+      responses:
+        '200':
+          description: The row was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tables/{tableID}/queries:
+    post:
+      operationId: queryTable
+      tags:
+        - Queries
+      summary: Query a Big Table with SQL
+      description: >-
+        Runs a SQL query (SELECT with WHERE/AND/OR and optional parameter
+        binding) against a Big Table and returns the matching rows. When a
+        result set exceeds the response limit a continuation token is returned.
+        Available on Business and Enterprise plans.
+      parameters:
+        - $ref: '#/components/parameters/TableID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: The query results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RowsPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /stashes/{stashID}/{serial}:
+    put:
+      operationId: setStashChunk
+      tags:
+        - Stashes
+      summary: Set a stash chunk
+      description: >-
+        Sets the content of a chunk of data inside a stash, identified by a
+        serial number. Large data sets are uploaded as a sequence of serial
+        chunks and then referenced by stash ID when creating a table or adding
+        rows. Accepts JSON, CSV, or TSV bodies.
+      parameters:
+        - $ref: '#/components/parameters/StashID'
+        - name: serial
+          in: path
+          required: true
+          description: Zero-based serial number of this chunk within the stash.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/RowValues'
+          text/csv:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: The chunk was stored.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /stashes/{stashID}:
+    delete:
+      operationId: deleteStash
+      tags:
+        - Stashes
+      summary: Delete a stash
+      description: Deletes a stash and all of its staged data.
+      parameters:
+        - $ref: '#/components/parameters/StashID'
+      responses:
+        '200':
+          description: The stash was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Glide team API token passed as `Authorization: Bearer <token>`. Tokens
+        are created in the Glide team settings.
+  parameters:
+    TableID:
+      name: tableID
+      in: path
+      required: true
+      description: The ID of the Big Table.
+      schema:
+        type: string
+    RowID:
+      name: rowID
+      in: path
+      required: true
+      description: The ID of the row.
+      schema:
+        type: string
+    StashID:
+      name: stashID
+      in: path
+      required: true
+      description: Client-generated identifier for the stash.
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: The request was malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The API token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Table:
+      type: object
+      description: A Big Table belonging to the team.
+      properties:
+        id:
+          type: string
+          description: The table ID.
+        name:
+          type: string
+          description: The display name of the table.
+    Column:
+      type: object
+      description: A column definition in a Big Table schema.
+      properties:
+        id:
+          type: string
+          description: Stable column identifier used as the key in row values.
+        type:
+          type: string
+          description: The column data type.
+          enum:
+            - string
+            - number
+            - boolean
+            - dateTime
+            - uri
+            - image-uri
+            - json
+        name:
+          type: string
+          description: Human-readable column name.
+      required:
+        - type
+    RowValues:
+      type: object
+      description: >-
+        A map of column ID to value for a row. Values are typed according to the
+        column definition.
+      additionalProperties: true
+    Row:
+      type: object
+      description: A row in a Big Table, including its row ID.
+      properties:
+        '$rowID':
+          type: string
+          description: The unique row identifier.
+      additionalProperties: true
+    RowsPage:
+      type: object
+      description: A page of rows with an optional continuation token.
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Row'
+        next:
+          type: string
+          description: >-
+            Continuation token to retrieve the next page; absent when no further
+            rows remain.
+    CreateTableRequest:
+      type: object
+      description: Request body for creating a Big Table.
+      properties:
+        name:
+          type: string
+          description: The display name for the new table.
+        schema:
+          type: object
+          properties:
+            columns:
+              type: array
+              items:
+                $ref: '#/components/schemas/Column'
+        rows:
+          type: array
+          description: Optional inline seed rows.
+          items:
+            $ref: '#/components/schemas/RowValues'
+        '$stashID':
+          type: string
+          description: Optional stash ID to source seed rows from instead of inline rows.
+      required:
+        - name
+        - schema
+    CreateTableResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            tableID:
+              type: string
+              description: The ID of the newly created table.
+    OverwriteTableRequest:
+      type: object
+      description: Request body for overwriting a Big Table's schema and/or data.
+      properties:
+        schema:
+          type: object
+          properties:
+            columns:
+              type: array
+              items:
+                $ref: '#/components/schemas/Column'
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/RowValues'
+        '$stashID':
+          type: string
+          description: Optional stash ID to source rows from instead of inline rows.
+    AddRowsRequest:
+      type: object
+      description: Request body for adding rows to a Big Table.
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/RowValues'
+        '$stashID':
+          type: string
+          description: Optional stash ID to source rows from instead of inline rows.
+    AddRowsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              rowID:
+                type: string
+                description: The ID of an added row.
+    UpdateRowRequest:
+      type: object
+      description: A map of column ID to new value for the columns being updated.
+      additionalProperties: true
+    QueryRequest:
+      type: object
+      description: A SQL query against a Big Table.
+      properties:
+        sql:
+          type: string
+          description: The SQL SELECT statement to run against the table.
+          example: SELECT * FROM data WHERE status = ? AND amount > ?
+        params:
+          type: array
+          description: >-
+            Positional parameters bound to the placeholders in the SQL
+            statement, in order.
+          items: {}
+        startAt:
+          type: string
+          description: Continuation token from a prior query that did not return all rows.
+      required:
+        - sql
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable description of the error.
+        code:
+          type: string
+          description: A machine-readable error code.

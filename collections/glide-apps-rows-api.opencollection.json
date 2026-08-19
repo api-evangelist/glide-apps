@@ -1,0 +1,176 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Glide Queries Rows API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Rows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get rows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.glideapps.com/tables/:tableID/rows",
+            "params": [
+              {
+                "name": "tableID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Big Table."
+              },
+              {
+                "name": "continuation",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token returned by a previous call to retrieve the next page."
+              }
+            ]
+          },
+          "docs": "Returns rows from a Big Table. A maximum of 10,000 rows are returned per response; when more rows exist a continuation token is included that can be passed back to retrieve the next page."
+        },
+        {
+          "info": {
+            "name": "Add rows",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.glideapps.com/tables/:tableID/rows",
+            "params": [
+              {
+                "name": "tableID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Big Table."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds one or more rows to a Big Table. Rows may be provided inline or referenced from a previously populated stash for large batches. Returns the IDs of the rows that were added."
+        },
+        {
+          "info": {
+            "name": "Get rows version",
+            "type": "http"
+          },
+          "http": {
+            "method": "HEAD",
+            "url": "https://api.glideapps.com/tables/:tableID/rows",
+            "params": [
+              {
+                "name": "tableID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Big Table."
+              }
+            ]
+          },
+          "docs": "Returns the current data version of the table in an ETag response header without returning the row bodies, so clients can cheaply detect whether the data has changed."
+        },
+        {
+          "info": {
+            "name": "Get a row",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.glideapps.com/tables/:tableID/rows/:rowID",
+            "params": [
+              {
+                "name": "tableID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Big Table."
+              },
+              {
+                "name": "rowID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the row."
+              }
+            ]
+          },
+          "docs": "Returns a single row from a Big Table by its row ID."
+        },
+        {
+          "info": {
+            "name": "Update a row",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.glideapps.com/tables/:tableID/rows/:rowID",
+            "headers": [
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tableID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Big Table."
+              },
+              {
+                "name": "rowID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the row."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the values of an existing row. Only the provided columns are changed. An If-Match header carrying a prior ETag may be supplied for optimistic concurrency control."
+        },
+        {
+          "info": {
+            "name": "Delete a row",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.glideapps.com/tables/:tableID/rows/:rowID",
+            "params": [
+              {
+                "name": "tableID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Big Table."
+              },
+              {
+                "name": "rowID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the row."
+              }
+            ]
+          },
+          "docs": "Deletes a single row from a Big Table by its row ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Glide Queries Tables API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Big Tables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.glideapps.com/tables"
+          },
+          "docs": "Returns all Big Tables in the team associated with the API token."
+        },
+        {
+          "info": {
+            "name": "Create a Big Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.glideapps.com/tables",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Big Table with the provided name, column schema, and optional seed rows. Rows may be provided inline or referenced from a previously populated stash. Returns the new table ID."
+        },
+        {
+          "info": {
+            "name": "Overwrite a Big Table",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.glideapps.com/tables/:tableID",
+            "params": [
+              {
+                "name": "tableID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Big Table."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces the schema and/or data of an existing Big Table. Rows may be provided inline or referenced from a stash."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

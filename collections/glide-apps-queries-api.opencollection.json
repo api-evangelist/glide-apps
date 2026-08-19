@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Glide Queries API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Queries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query a Big Table with SQL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.glideapps.com/tables/:tableID/queries",
+            "params": [
+              {
+                "name": "tableID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Big Table."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Runs a SQL query (SELECT with WHERE/AND/OR and optional parameter binding) against a Big Table and returns the matching rows. When a result set exceeds the response limit a continuation token is returned. Available on Business and Enterprise plans."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

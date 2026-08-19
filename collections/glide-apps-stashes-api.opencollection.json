@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Glide Queries Stashes API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stashes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Set a stash chunk",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.glideapps.com/stashes/:stashID/:serial",
+            "params": [
+              {
+                "name": "stashID",
+                "value": "",
+                "type": "path",
+                "description": "Client-generated identifier for the stash."
+              },
+              {
+                "name": "serial",
+                "value": "",
+                "type": "path",
+                "description": "Zero-based serial number of this chunk within the stash."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the content of a chunk of data inside a stash, identified by a serial number. Large data sets are uploaded as a sequence of serial chunks and then referenced by stash ID when creating a table or adding rows. Accepts JSON, CSV, or TSV bodies."
+        },
+        {
+          "info": {
+            "name": "Delete a stash",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.glideapps.com/stashes/:stashID",
+            "params": [
+              {
+                "name": "stashID",
+                "value": "",
+                "type": "path",
+                "description": "Client-generated identifier for the stash."
+              }
+            ]
+          },
+          "docs": "Deletes a stash and all of its staged data."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

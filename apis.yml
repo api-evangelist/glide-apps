@@ -22,6 +22,13 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/glide-apps.png
 tags:
+- No-Code
+- App Builder
+- Tables
+- Big Tables
+- Data
+- Artificial Intelligence
+tags_raw:
 - No Code
 - App Builder
 - Tables
@@ -38,6 +45,8 @@ apis:
   humanURL: https://apidocs.glideapps.com/api-reference/v2
   baseURL: https://api.glideapps.com
   tags:
+  - Query
+  tags_raw:
   - Queries
   properties:
   - type: OpenAPI

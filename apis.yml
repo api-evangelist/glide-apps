@@ -7,6 +7,18 @@ description: Glide is a no-code platform for building custom business apps from 
   creating tables, listing and paginating rows, adding, updating, and deleting rows,
   staging large batches with stashes, and querying tables with SQL - using a Bearer
   API token.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve

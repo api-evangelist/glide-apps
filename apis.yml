@@ -34,7 +34,7 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/glide-apps.png
 tags:
-- No Code
+- No-Code
 - App Builder
 - Tables
 - Big Tables

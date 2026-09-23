@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Glide Queries Tables API
+  title: Glide Tables API
   description: The Glide REST API (v2) for working with Glide Big Tables. Create and overwrite tables, list and paginate rows, read a single row, add rows, update and delete rows, stage large batches with stashes, and query tables with SQL. All requests are authenticated with a Bearer API token issued from the Glide team settings. The API operates at the team level and works with Glide Big Tables.
   termsOfService: https://www.glideapps.com/legal/terms-of-service
   contact:
@@ -95,6 +95,25 @@ components:
         code:
           type: string
           description: A machine-readable error code.
+    CreateTableResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            tableID:
+              type: string
+              description: The ID of the newly created table.
+    Table:
+      type: object
+      description: A Big Table belonging to the team.
+      properties:
+        id:
+          type: string
+          description: The table ID.
+        name:
+          type: string
+          description: The display name of the table.
     Column:
       type: object
       description: A column definition in a Big Table schema.
@@ -118,16 +137,6 @@ components:
           description: Human-readable column name.
       required:
       - type
-    Table:
-      type: object
-      description: A Big Table belonging to the team.
-      properties:
-        id:
-          type: string
-          description: The table ID.
-        name:
-          type: string
-          description: The display name of the table.
     OverwriteTableRequest:
       type: object
       description: Request body for overwriting a Big Table's schema and/or data.
@@ -175,15 +184,6 @@ components:
       type: object
       description: A map of column ID to value for a row. Values are typed according to the column definition.
       additionalProperties: true
-    CreateTableResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            tableID:
-              type: string
-              description: The ID of the newly created table.
   responses:
     Unauthorized:
       description: The API token is missing or invalid.

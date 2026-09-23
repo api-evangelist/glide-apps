@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Glide Queries API
   description: The Glide REST API (v2) for working with Glide Big Tables. Create and overwrite tables, list and paginate rows, read a single row, add rows, update and delete rows, stage large batches with stashes, and query tables with SQL. All requests are authenticated with a Bearer API token issued from the Glide team settings. The API operates at the team level and works with Glide Big Tables.
@@ -46,6 +46,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    Row:
+      type: object
+      description: A row in a Big Table, including its row ID.
+      properties:
+        $rowID:
+          type: string
+          description: The unique row identifier.
+      additionalProperties: true
     Error:
       type: object
       properties:
@@ -72,14 +80,6 @@ components:
           description: Continuation token from a prior query that did not return all rows.
       required:
       - sql
-    Row:
-      type: object
-      description: A row in a Big Table, including its row ID.
-      properties:
-        $rowID:
-          type: string
-          description: The unique row identifier.
-      additionalProperties: true
     RowsPage:
       type: object
       description: A page of rows with an optional continuation token.

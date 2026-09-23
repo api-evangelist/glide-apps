@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Glide Queries Stashes API
+  title: Glide Stashes API
   description: The Glide REST API (v2) for working with Glide Big Tables. Create and overwrite tables, list and paginate rows, read a single row, add rows, update and delete rows, stage large batches with stashes, and query tables with SQL. All requests are authenticated with a Bearer API token issued from the Glide team settings. The API operates at the team level and works with Glide Big Tables.
   termsOfService: https://www.glideapps.com/legal/terms-of-service
   contact:
@@ -66,14 +66,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    StashID:
-      name: stashID
-      in: path
-      required: true
-      description: Client-generated identifier for the stash.
-      schema:
-        type: string
   schemas:
     Error:
       type: object
@@ -88,6 +80,14 @@ components:
       type: object
       description: A map of column ID to value for a row. Values are typed according to the column definition.
       additionalProperties: true
+  parameters:
+    StashID:
+      name: stashID
+      in: path
+      required: true
+      description: Client-generated identifier for the stash.
+      schema:
+        type: string
   responses:
     Unauthorized:
       description: The API token is missing or invalid.

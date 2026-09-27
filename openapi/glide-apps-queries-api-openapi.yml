@@ -45,24 +45,26 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    BadRequest:
+      description: The request was malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The API token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Row:
-      type: object
-      description: A row in a Big Table, including its row ID.
-      properties:
-        $rowID:
-          type: string
-          description: The unique row identifier.
-      additionalProperties: true
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable description of the error.
-        code:
-          type: string
-          description: A machine-readable error code.
     QueryRequest:
       type: object
       description: A SQL query against a Big Table.
@@ -80,6 +82,23 @@ components:
           description: Continuation token from a prior query that did not return all rows.
       required:
       - sql
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable description of the error.
+        code:
+          type: string
+          description: A machine-readable error code.
+    Row:
+      type: object
+      description: A row in a Big Table, including its row ID.
+      properties:
+        $rowID:
+          type: string
+          description: The unique row identifier.
+      additionalProperties: true
     RowsPage:
       type: object
       description: A page of rows with an optional continuation token.
@@ -91,25 +110,6 @@ components:
         next:
           type: string
           description: Continuation token to retrieve the next page; absent when no further rows remain.
-  responses:
-    Unauthorized:
-      description: The API token is missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     TableID:
       name: tableID

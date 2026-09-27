@@ -165,13 +165,9 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Row:
+    UpdateRowRequest:
       type: object
-      description: A row in a Big Table, including its row ID.
-      properties:
-        $rowID:
-          type: string
-          description: The unique row identifier.
+      description: A map of column ID to new value for the columns being updated.
       additionalProperties: true
     Error:
       type: object
@@ -182,9 +178,28 @@ components:
         code:
           type: string
           description: A machine-readable error code.
-    UpdateRowRequest:
+    Row:
       type: object
-      description: A map of column ID to new value for the columns being updated.
+      description: A row in a Big Table, including its row ID.
+      properties:
+        $rowID:
+          type: string
+          description: The unique row identifier.
+      additionalProperties: true
+    RowsPage:
+      type: object
+      description: A page of rows with an optional continuation token.
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Row'
+        next:
+          type: string
+          description: Continuation token to retrieve the next page; absent when no further rows remain.
+    RowValues:
+      type: object
+      description: A map of column ID to value for a row. Values are typed according to the column definition.
       additionalProperties: true
     AddRowsResponse:
       type: object
@@ -197,17 +212,6 @@ components:
               rowID:
                 type: string
                 description: The ID of an added row.
-    RowsPage:
-      type: object
-      description: A page of rows with an optional continuation token.
-      properties:
-        rows:
-          type: array
-          items:
-            $ref: '#/components/schemas/Row'
-        next:
-          type: string
-          description: Continuation token to retrieve the next page; absent when no further rows remain.
     AddRowsRequest:
       type: object
       description: Request body for adding rows to a Big Table.
@@ -219,19 +223,15 @@ components:
         $stashID:
           type: string
           description: Optional stash ID to source rows from instead of inline rows.
-    RowValues:
-      type: object
-      description: A map of column ID to value for a row. Values are typed according to the column definition.
-      additionalProperties: true
   responses:
-    Unauthorized:
-      description: The API token is missing or invalid.
+    BadRequest:
+      description: The request was malformed.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was malformed.
+    Unauthorized:
+      description: The API token is missing or invalid.
       content:
         application/json:
           schema:
@@ -243,18 +243,18 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   parameters:
-    RowID:
-      name: rowID
-      in: path
-      required: true
-      description: The ID of the row.
-      schema:
-        type: string
     TableID:
       name: tableID
       in: path
       required: true
       description: The ID of the Big Table.
+      schema:
+        type: string
+    RowID:
+      name: rowID
+      in: path
+      required: true
+      description: The ID of the row.
       schema:
         type: string
   securitySchemes:

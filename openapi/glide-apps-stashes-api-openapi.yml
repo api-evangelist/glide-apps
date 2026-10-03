@@ -66,33 +66,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    StashID:
-      name: stashID
-      in: path
-      required: true
-      description: Client-generated identifier for the stash.
-      schema:
-        type: string
-  responses:
-    BadRequest:
-      description: The request was malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The API token is missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -107,6 +80,33 @@ components:
       type: object
       description: A map of column ID to value for a row. Values are typed according to the column definition.
       additionalProperties: true
+  responses:
+    Unauthorized:
+      description: The API token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    StashID:
+      name: stashID
+      in: path
+      required: true
+      description: Client-generated identifier for the stash.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

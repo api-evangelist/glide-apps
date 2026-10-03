@@ -85,25 +85,14 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: The request was malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The API token is missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    TableID:
+      name: tableID
+      in: path
+      required: true
+      description: The ID of the Big Table.
+      schema:
+        type: string
   schemas:
     OverwriteTableRequest:
       type: object
@@ -123,19 +112,6 @@ components:
         $stashID:
           type: string
           description: Optional stash ID to source rows from instead of inline rows.
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable description of the error.
-        code:
-          type: string
-          description: A machine-readable error code.
-    RowValues:
-      type: object
-      description: A map of column ID to value for a row. Values are typed according to the column definition.
-      additionalProperties: true
     Column:
       type: object
       description: A column definition in a Big Table schema.
@@ -184,15 +160,6 @@ components:
       required:
       - name
       - schema
-    CreateTableResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            tableID:
-              type: string
-              description: The ID of the newly created table.
     Table:
       type: object
       description: A Big Table belonging to the team.
@@ -203,14 +170,47 @@ components:
         name:
           type: string
           description: The display name of the table.
-  parameters:
-    TableID:
-      name: tableID
-      in: path
-      required: true
-      description: The ID of the Big Table.
-      schema:
-        type: string
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable description of the error.
+        code:
+          type: string
+          description: A machine-readable error code.
+    CreateTableResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            tableID:
+              type: string
+              description: The ID of the newly created table.
+    RowValues:
+      type: object
+      description: A map of column ID to value for a row. Values are typed according to the column definition.
+      additionalProperties: true
+  responses:
+    Unauthorized:
+      description: The API token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

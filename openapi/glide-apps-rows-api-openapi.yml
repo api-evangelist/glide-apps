@@ -164,20 +164,22 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    TableID:
+      name: tableID
+      in: path
+      required: true
+      description: The ID of the Big Table.
+      schema:
+        type: string
+    RowID:
+      name: rowID
+      in: path
+      required: true
+      description: The ID of the row.
+      schema:
+        type: string
   schemas:
-    UpdateRowRequest:
-      type: object
-      description: A map of column ID to new value for the columns being updated.
-      additionalProperties: true
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable description of the error.
-        code:
-          type: string
-          description: A machine-readable error code.
     Row:
       type: object
       description: A row in a Big Table, including its row ID.
@@ -197,6 +199,15 @@ components:
         next:
           type: string
           description: Continuation token to retrieve the next page; absent when no further rows remain.
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable description of the error.
+        code:
+          type: string
+          description: A machine-readable error code.
     RowValues:
       type: object
       description: A map of column ID to value for a row. Values are typed according to the column definition.
@@ -212,6 +223,10 @@ components:
               rowID:
                 type: string
                 description: The ID of an added row.
+    UpdateRowRequest:
+      type: object
+      description: A map of column ID to new value for the columns being updated.
+      additionalProperties: true
     AddRowsRequest:
       type: object
       description: Request body for adding rows to a Big Table.
@@ -224,14 +239,14 @@ components:
           type: string
           description: Optional stash ID to source rows from instead of inline rows.
   responses:
-    BadRequest:
-      description: The request was malformed.
+    Unauthorized:
+      description: The API token is missing or invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The API token is missing or invalid.
+    BadRequest:
+      description: The request was malformed.
       content:
         application/json:
           schema:
@@ -242,21 +257,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    TableID:
-      name: tableID
-      in: path
-      required: true
-      description: The ID of the Big Table.
-      schema:
-        type: string
-    RowID:
-      name: rowID
-      in: path
-      required: true
-      description: The ID of the row.
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

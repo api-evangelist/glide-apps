@@ -45,23 +45,37 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    TableID:
-      name: tableID
-      in: path
-      required: true
-      description: The ID of the Big Table.
-      schema:
-        type: string
+  responses:
+    BadRequest:
+      description: The request was malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The API token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Row:
+    RowsPage:
       type: object
-      description: A row in a Big Table, including its row ID.
+      description: A page of rows with an optional continuation token.
       properties:
-        $rowID:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Row'
+        next:
           type: string
-          description: The unique row identifier.
-      additionalProperties: true
+          description: Continuation token to retrieve the next page; absent when no further rows remain.
     QueryRequest:
       type: object
       description: A SQL query against a Big Table.
@@ -79,17 +93,6 @@ components:
           description: Continuation token from a prior query that did not return all rows.
       required:
       - sql
-    RowsPage:
-      type: object
-      description: A page of rows with an optional continuation token.
-      properties:
-        rows:
-          type: array
-          items:
-            $ref: '#/components/schemas/Row'
-        next:
-          type: string
-          description: Continuation token to retrieve the next page; absent when no further rows remain.
     Error:
       type: object
       properties:
@@ -99,25 +102,22 @@ components:
         code:
           type: string
           description: A machine-readable error code.
-  responses:
-    Unauthorized:
-      description: The API token is missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Row:
+      type: object
+      description: A row in a Big Table, including its row ID.
+      properties:
+        $rowID:
+          type: string
+          description: The unique row identifier.
+      additionalProperties: true
+  parameters:
+    TableID:
+      name: tableID
+      in: path
+      required: true
+      description: The ID of the Big Table.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

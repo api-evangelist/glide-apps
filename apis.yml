@@ -143,6 +143,8 @@ apis:
   - type: Documentation
     url: https://www.glideapps.com/docs/getting-started-with-the-glide-api
 common:
+- type: Pricing
+  url: https://www.glideapps.com/pricing
 - type: AgenticAccess
   url: agentic-access/glide-apps-agentic-access.yml
 - type: TrustCenter

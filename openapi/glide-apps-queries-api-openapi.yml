@@ -45,26 +45,16 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: The request was malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The API token is missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable description of the error.
+        code:
+          type: string
+          description: A machine-readable error code.
     RowsPage:
       type: object
       description: A page of rows with an optional continuation token.
@@ -93,15 +83,6 @@ components:
           description: Continuation token from a prior query that did not return all rows.
       required:
       - sql
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable description of the error.
-        code:
-          type: string
-          description: A machine-readable error code.
     Row:
       type: object
       description: A row in a Big Table, including its row ID.
@@ -110,6 +91,25 @@ components:
           type: string
           description: The unique row identifier.
       additionalProperties: true
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The API token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TableID:
       name: tableID

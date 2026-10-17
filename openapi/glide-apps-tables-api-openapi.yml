@@ -85,44 +85,43 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: The request was malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The API token is missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    OverwriteTableRequest:
+    Error:
       type: object
-      description: Request body for overwriting a Big Table's schema and/or data.
       properties:
-        schema:
-          type: object
-          properties:
-            columns:
-              type: array
-              items:
-                $ref: '#/components/schemas/Column'
-        rows:
-          type: array
-          items:
-            $ref: '#/components/schemas/RowValues'
-        $stashID:
+        message:
           type: string
-          description: Optional stash ID to source rows from instead of inline rows.
+          description: A human-readable description of the error.
+        code:
+          type: string
+          description: A machine-readable error code.
+    RowValues:
+      type: object
+      description: A map of column ID to value for a row. Values are typed according to the column definition.
+      additionalProperties: true
+    Column:
+      type: object
+      description: A column definition in a Big Table schema.
+      properties:
+        id:
+          type: string
+          description: Stable column identifier used as the key in row values.
+        type:
+          type: string
+          description: The column data type.
+          enum:
+          - string
+          - number
+          - boolean
+          - dateTime
+          - uri
+          - image-uri
+          - json
+        name:
+          type: string
+          description: Human-readable column name.
+      required:
+      - type
     Table:
       type: object
       description: A Big Table belonging to the team.
@@ -158,42 +157,6 @@ components:
       required:
       - name
       - schema
-    Column:
-      type: object
-      description: A column definition in a Big Table schema.
-      properties:
-        id:
-          type: string
-          description: Stable column identifier used as the key in row values.
-        type:
-          type: string
-          description: The column data type.
-          enum:
-          - string
-          - number
-          - boolean
-          - dateTime
-          - uri
-          - image-uri
-          - json
-        name:
-          type: string
-          description: Human-readable column name.
-      required:
-      - type
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A human-readable description of the error.
-        code:
-          type: string
-          description: A machine-readable error code.
-    RowValues:
-      type: object
-      description: A map of column ID to value for a row. Values are typed according to the column definition.
-      additionalProperties: true
     CreateTableResponse:
       type: object
       properties:
@@ -203,6 +166,43 @@ components:
             tableID:
               type: string
               description: The ID of the newly created table.
+    OverwriteTableRequest:
+      type: object
+      description: Request body for overwriting a Big Table's schema and/or data.
+      properties:
+        schema:
+          type: object
+          properties:
+            columns:
+              type: array
+              items:
+                $ref: '#/components/schemas/Column'
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/RowValues'
+        $stashID:
+          type: string
+          description: Optional stash ID to source rows from instead of inline rows.
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The API token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TableID:
       name: tableID

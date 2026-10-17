@@ -164,63 +164,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: The request was malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The API token is missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    UpdateRowRequest:
-      type: object
-      description: A map of column ID to new value for the columns being updated.
-      additionalProperties: true
-    AddRowsResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              rowID:
-                type: string
-                description: The ID of an added row.
-    AddRowsRequest:
-      type: object
-      description: Request body for adding rows to a Big Table.
-      properties:
-        rows:
-          type: array
-          items:
-            $ref: '#/components/schemas/RowValues'
-        $stashID:
-          type: string
-          description: Optional stash ID to source rows from instead of inline rows.
-    RowsPage:
-      type: object
-      description: A page of rows with an optional continuation token.
-      properties:
-        rows:
-          type: array
-          items:
-            $ref: '#/components/schemas/Row'
-        next:
-          type: string
-          description: Continuation token to retrieve the next page; absent when no further rows remain.
     Error:
       type: object
       properties:
@@ -234,6 +178,43 @@ components:
       type: object
       description: A map of column ID to value for a row. Values are typed according to the column definition.
       additionalProperties: true
+    AddRowsRequest:
+      type: object
+      description: Request body for adding rows to a Big Table.
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/RowValues'
+        $stashID:
+          type: string
+          description: Optional stash ID to source rows from instead of inline rows.
+    AddRowsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              rowID:
+                type: string
+                description: The ID of an added row.
+    RowsPage:
+      type: object
+      description: A page of rows with an optional continuation token.
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Row'
+        next:
+          type: string
+          description: Continuation token to retrieve the next page; absent when no further rows remain.
+    UpdateRowRequest:
+      type: object
+      description: A map of column ID to new value for the columns being updated.
+      additionalProperties: true
     Row:
       type: object
       description: A row in a Big Table, including its row ID.
@@ -242,6 +223,25 @@ components:
           type: string
           description: The unique row identifier.
       additionalProperties: true
+  responses:
+    Unauthorized:
+      description: The API token is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TableID:
       name: tableID

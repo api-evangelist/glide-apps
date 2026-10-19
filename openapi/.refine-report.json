@@ -1,26 +1,57 @@
 {
   "provider": "glide-apps",
   "sources": [
-    "_original/glide-apps-openapi.yml"
+    "_original/glide-apps-openapi.json"
   ],
   "outputs": [
-    "glide-apps-queries-api-openapi.yml",
-    "glide-apps-rows-api-openapi.yml",
+    "glide-apps-apps-api-openapi.yml",
+    "glide-apps-jobs-api-openapi.yml",
+    "glide-apps-me-api-openapi.yml",
     "glide-apps-stashes-api-openapi.yml",
     "glide-apps-tables-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "glide-apps-openapi.json: info.title missing",
+    "glide-apps-openapi.json: info.version missing"
+  ],
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
-    "glide-apps-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "glide-apps-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "glide-apps-openapi.json: tagged paths GET /me -> Me",
+    "glide-apps-openapi.json: tagged paths GET /apps -> Apps",
+    "glide-apps-openapi.json: tagged paths POST /apps/{appID}/uploads -> Apps",
+    "glide-apps-openapi.json: tagged paths POST /apps/{appID}/uploads/{uploadID}/complete -> Apps",
+    "glide-apps-openapi.json: tagged paths GET /apps/{appID}/tables -> Apps",
+    "glide-apps-openapi.json: tagged paths GET /apps/{appID}/tables/{tableID} -> Apps",
+    "glide-apps-openapi.json: tagged paths DELETE /apps/{appID}/tables/{tableID} -> Apps",
+    "glide-apps-openapi.json: tagged paths GET /apps/{appID}/tables/{tableID}/schema -> Apps",
+    "glide-apps-openapi.json: tagged paths GET /apps/{appID}/tables/{tableID}/rows -> Apps",
+    "glide-apps-openapi.json: tagged paths POST /apps/{appID}/tables/{tableID}/rows -> Apps",
+    "glide-apps-openapi.json: tagged paths DELETE /apps/{appID}/tables/{tableID}/rows -> Apps",
+    "glide-apps-openapi.json: tagged paths GET /apps/{appID}/tables/{tableID}/rows/{rowID} -> Apps",
+    "glide-apps-openapi.json: tagged paths PATCH /apps/{appID}/tables/{tableID}/rows/{rowID} -> Apps",
+    "glide-apps-openapi.json: tagged paths DELETE /apps/{appID}/tables/{tableID}/rows/{rowID} -> Apps",
+    "glide-apps-openapi.json: tagged paths GET /tables -> Tables",
+    "glide-apps-openapi.json: tagged paths POST /tables -> Tables",
+    "glide-apps-openapi.json: tagged paths POST /tables/import -> Tables",
+    "glide-apps-openapi.json: tagged paths PUT /tables/{tableID} -> Tables",
+    "glide-apps-openapi.json: tagged paths HEAD /tables/{tableID}/rows -> Tables",
+    "glide-apps-openapi.json: tagged paths GET /tables/{tableID}/rows -> Tables",
+    "glide-apps-openapi.json: tagged paths POST /tables/{tableID}/rows -> Tables",
+    "glide-apps-openapi.json: tagged paths GET /tables/{tableID}/rows/{rowID} -> Tables",
+    "glide-apps-openapi.json: tagged paths PATCH /tables/{tableID}/rows/{rowID} -> Tables",
+    "glide-apps-openapi.json: tagged paths DELETE /tables/{tableID}/rows/{rowID} -> Tables",
+    "glide-apps-openapi.json: tagged paths GET /jobs/{jobID} -> Jobs",
+    "glide-apps-openapi.json: tagged paths PUT /stashes/{stashID}/{serial} -> Stashes",
+    "glide-apps-openapi.json: tagged paths DELETE /stashes/{stashID} -> Stashes",
+    "glide-apps-openapi.json: declared missing tag: Apps",
+    "glide-apps-openapi.json: declared missing tag: Jobs",
+    "glide-apps-openapi.json: declared missing tag: Me",
+    "glide-apps-openapi.json: declared missing tag: Stashes",
+    "glide-apps-openapi.json: declared missing tag: Tables",
+    "apis.yml register: written (+3 apis, 5 total)"
   ],
-  "skipped": [
-    "glide-apps-queries-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "glide-apps-rows-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "glide-apps-stashes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "glide-apps-tables-api-openapi.yml: previously refined output, superseded by openapi/_original/"
-  ]
+  "skipped": []
 }

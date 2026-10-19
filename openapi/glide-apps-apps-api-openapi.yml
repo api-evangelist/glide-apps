@@ -1,0 +1,1095 @@
+openapi: 3.2.0
+info:
+  title: Glide Apps API
+  version: ''
+servers:
+- description: Production
+  url: https://api.glideapps.com
+security:
+- BearerAuth: []
+tags:
+- name: Apps
+paths:
+  /apps:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        description:
+                          type: string
+                        containingFolder:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      additionalProperties: false
+                required:
+                - data
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      tags:
+      - Apps
+      summary: Get apps
+      x-summary-source: derived
+      operationId: getApps
+      x-operation-id-source: derived
+  /apps/{appID}/uploads:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      uploadID:
+                        type: string
+                      uploadLocation:
+                        type: string
+                    required:
+                    - uploadID
+                    - uploadLocation
+                    additionalProperties: false
+                required:
+                - data
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+        '402':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+        '413':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      operationId: POSTAppUploads
+      parameters:
+      - name: appID
+        in: path
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contentType:
+                  type: string
+                fileName:
+                  type: string
+              required:
+              - contentType
+              - fileName
+              additionalProperties: false
+      tags:
+      - Apps
+      summary: POST app uploads
+      x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: POST app uploads
+  /apps/{appID}/uploads/{uploadID}/complete:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                    required:
+                    - url
+                    additionalProperties: false
+                required:
+                - data
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+        '402':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+        '413':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      operationId: POSTAppUploadComplete
+      parameters:
+      - name: appID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: uploadID
+        in: path
+        schema:
+          type: string
+        required: true
+      tags:
+      - Apps
+      summary: POST app upload complete
+      x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: POST app upload complete
+  /apps/{appID}/tables:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      additionalProperties: false
+                required:
+                - data
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      operationId: GETAppTables
+      parameters:
+      - name: appID
+        in: path
+        schema:
+          type: string
+        required: true
+      tags:
+      - Apps
+      summary: GET app tables
+      x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: GET app tables
+  /apps/{appID}/tables/{tableID}:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      columns:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            name:
+                              type: string
+                            type:
+                              type: object
+                              properties:
+                                kind:
+                                  type: string
+                              required:
+                              - kind
+                              additionalProperties: false
+                          required:
+                          - id
+                          - name
+                          - type
+                          additionalProperties: false
+                    required:
+                    - columns
+                    additionalProperties: false
+                required:
+                - data
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      parameters:
+      - name: appID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: tableID
+        in: path
+        schema:
+          type: string
+        required: true
+      tags:
+      - Apps
+      summary: Get apps by app id tables by table id
+      x-summary-source: derived
+      operationId: getAppsByAppIDTablesByTableID
+      x-operation-id-source: derived
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                required:
+                - success
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      operationId: DELETEAppTable
+      parameters:
+      - name: appID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: tableID
+        in: path
+        schema:
+          type: string
+        required: true
+      tags:
+      - Apps
+      summary: DELETE app table
+      x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: DELETE app table
+  /apps/{appID}/tables/{tableID}/schema:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      columns:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            name:
+                              type: string
+                            type:
+                              type: object
+                              properties:
+                                kind:
+                                  type: string
+                              required:
+                              - kind
+                              additionalProperties: false
+                          required:
+                          - id
+                          - name
+                          - type
+                          additionalProperties: false
+                    required:
+                    - columns
+                    additionalProperties: false
+                required:
+                - data
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      parameters:
+      - name: appID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: tableID
+        in: path
+        schema:
+          type: string
+        required: true
+      tags:
+      - Apps
+      summary: Get apps by app id tables by table id schema
+      x-summary-source: derived
+      operationId: getAppsByAppIDTablesByTableIDSchema
+      x-operation-id-source: derived
+  /apps/{appID}/tables/{tableID}/rows:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      rows:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties: {}
+                          description: "A row object conforming to the schema of the table, where keys are the column IDs and values are the column values:\n\n```json\n{\n\t\"fullName\": \"Alex Bard\",\n\t\"invoiceDate\": \"2024-07-29T14:04:15.561Z\",\n\t\"totalAmount\": 34.50,\n\t\"amountPaid\": 0\n}\n```"
+                          example:
+                            fullName: Alex Bard
+                            invoiceDate: '2024-07-29T14:04:15.561Z'
+                            totalAmount: 34.5
+                            amountPaid: 0
+                        description: "A collection of row objects conforming to the schema of the table where keys are the column IDs and values are the column values:\n\n```json\n[\n\t{\n\t\t\"fullName\": \"Alex Bard\",\n\t\t\"invoiceDate\": \"2024-07-29T14:04:15.561Z\",\n\t\t\"totalAmount\": 34.50,\n\t\t\"amountPaid\": 0\n\t},\n\t{\n\t\t\"fullName\": \"Alicia Hines\",\n\t\t\"invoiceDate\": \"2023-06-15T10:30:00.000Z\",\n\t\t\"totalAmount\": 50.75,\n\t\t\"amountPaid\": 20\n\t}\n]\n```"
+                        example:
+                        - fullName: Alex Bard
+                          invoiceDate: '2024-07-29T14:04:15.561Z'
+                          totalAmount: 34.5
+                          amountPaid: 0
+                        - fullName: Alicia Hines
+                          invoiceDate: '2023-06-15T10:30:00.000Z'
+                          totalAmount: 50.75
+                          amountPaid: 20
+                    required:
+                    - rows
+                    additionalProperties: false
+                  next:
+                    type: string
+                required:
+                - data
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      operationId: GETAppTableRows
+      parameters:
+      - name: appID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: tableID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: start
+        in: query
+        schema:
+          type: string
+        required: false
+      tags:
+      - Apps
+      summary: GET app table rows
+      x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: GET app table rows
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      rowIDs:
+                        type: array
+                        items:
+                          type: string
+                        description: Row IDs of added rows
+                    required:
+                    - rowIDs
+                    additionalProperties: false
+                required:
+                - data
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                    required:
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      operationId: POSTAppTableRows
+      parameters:
+      - name: appID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: tableID
+        in: path
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - $ref: '#/components/schemas/A_row_object_conforming_to_'
+              - type: array
+                items:
+                  $ref: '#/components/schemas/A_row_object_conforming_to_'
+                description: "A collection of row objects conforming to the schema of the table where keys are the column IDs and values are the column values:\n\n```json\n[\n\t{\n\t\t\"fullName\": \"Alex Bard\",\n\t\t\"invoiceDate\": \"2024-07-29T14:04:15.561Z\",\n\t\t\"totalAmount\": 34.50,\n\t\t\"amountPaid\": 0\n\t},\n\t{\n\t\t\"fullName\": \"Alicia Hines\",\n\t\t\"invoiceDate\": \"2023-06-15T10:30:00.000Z\",\n\t\t\"totalAmount\": 50.75,\n\t\t\"amountPaid\": 20\n\t}\n]\n```"
+                example:
+                - fullName: Alex Bard
+                  invoiceDate: '2024-07-29T14:04:15.561Z'
+                  totalAmount: 34.5
+                  amountPaid: 0
+                - fullName: Alicia Hines
+                  invoiceDate: '2023-06-15T10:30:00.000Z'
+                  totalAmount: 50.75
+                  amountPaid: 20
+              description: "A row object conforming to the schema of the table, where keys are the column IDs and values are the column values:\n\n```json\n{\n\t\"fullName\": \"Alex Bard\",\n\t\"invoiceDate\": \"2024-07-29T14:04:15.561Z\",\n\t\"totalAmount\": 34.50,\n\t\"amountPaid\": 0\n}\n```"
+      tags:
+      - Apps
+      summary: POST app table rows
+      x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: POST app table rows
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                required:
+                - success
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      parameters:
+      - name: appID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: tableID
+        in: path
+        schema:
+          type: string
+        required: true
+      tags:
+      - Apps
+      summary: Delete apps by app id tables by table id rows
+      x-summary-source: derived
+      operationId: deleteAppsByAppIDTablesByTableIDRows
+      x-operation-id-source: derived
+  /apps/{appID}/tables/{tableID}/rows/{rowID}:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: {}
+                    description: "A row object conforming to the schema of the table, where keys are the column IDs and values are the column values:\n\n```json\n{\n\t\"fullName\": \"Alex Bard\",\n\t\"invoiceDate\": \"2024-07-29T14:04:15.561Z\",\n\t\"totalAmount\": 34.50,\n\t\"amountPaid\": 0\n}\n```"
+                    example:
+                      fullName: Alex Bard
+                      invoiceDate: '2024-07-29T14:04:15.561Z'
+                      totalAmount: 34.5
+                      amountPaid: 0
+                required:
+                - data
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      operationId: GETAppTableRow
+      parameters:
+      - name: appID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: tableID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: rowID
+        in: path
+        schema:
+          type: string
+        required: true
+      tags:
+      - Apps
+      summary: GET app table row
+      x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: GET app table row
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      rowIDs:
+                        type: array
+                        items:
+                          type: string
+                        description: Row IDs of edited rows
+                    required:
+                    - rowIDs
+                    additionalProperties: false
+                required:
+                - data
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      parameters:
+      - name: appID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: tableID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: rowID
+        in: path
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+              description: "A row object conforming to the schema of the table, where keys are the column IDs and values are the column values:\n\n```json\n{\n\t\"fullName\": \"Alex Bard\",\n\t\"invoiceDate\": \"2024-07-29T14:04:15.561Z\",\n\t\"totalAmount\": 34.50,\n\t\"amountPaid\": 0\n}\n```"
+              example:
+                fullName: Alex Bard
+                invoiceDate: '2024-07-29T14:04:15.561Z'
+                totalAmount: 34.5
+                amountPaid: 0
+      tags:
+      - Apps
+      summary: Update apps by app id tables by table id rows by row id
+      x-summary-source: derived
+      operationId: patchAppsByAppIDTablesByTableIDRowsByRowID
+      x-operation-id-source: derived
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                required:
+                - success
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      parameters:
+      - name: appID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: tableID
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: rowID
+        in: path
+        schema:
+          type: string
+        required: true
+      tags:
+      - Apps
+      summary: Delete apps by app id tables by table id rows by row id
+      x-summary-source: derived
+      operationId: deleteAppsByAppIDTablesByTableIDRowsByRowID
+      x-operation-id-source: derived
+components:
+  schemas:
+    A_row_object_conforming_to_:
+      type: object
+      additionalProperties: {}
+      description: "A row object conforming to the schema of the table, where keys are the column IDs and values are the column values:\n\n```json\n{\n\t\"fullName\": \"Alex Bard\",\n\t\"invoiceDate\": \"2024-07-29T14:04:15.561Z\",\n\t\"totalAmount\": 34.50,\n\t\"amountPaid\": 0\n}\n```"
+      example:
+        fullName: Alex Bard
+        invoiceDate: '2024-07-29T14:04:15.561Z'
+        totalAmount: 34.5
+        amountPaid: 0
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer authentication header of the form Bearer `<token>`, where `<token>` is your [auth token](/api-reference/v2/general/authentication).

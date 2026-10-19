@@ -1,0 +1,12 @@
+{
+ "url": "https://api.glideapps.com/swagger.json",
+ "final": "https://api.glideapps.com/swagger.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 62590,
+ "sha256": "e3ec449be1985ca0be3ad2c698f5a10f95eccb788cfe0dba8f9e4c7c97f79c17",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

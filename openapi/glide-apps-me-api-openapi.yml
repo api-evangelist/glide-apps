@@ -1,0 +1,65 @@
+openapi: 3.2.0
+info:
+  title: Glide Apps Me API
+  version: ''
+servers:
+- description: Production
+  url: https://api.glideapps.com
+security:
+- BearerAuth: []
+tags:
+- name: Me
+paths:
+  /me:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The id of the owner
+                  name:
+                    type: string
+                    description: The name of the owner
+                required:
+                - id
+                - name
+                additionalProperties: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - type
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+      tags:
+      - Me
+      summary: Get me
+      x-summary-source: derived
+      operationId: getMe
+      x-operation-id-source: derived
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer authentication header of the form Bearer `<token>`, where `<token>` is your [auth token](/api-reference/v2/general/authentication).

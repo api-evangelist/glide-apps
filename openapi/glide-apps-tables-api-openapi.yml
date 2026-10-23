@@ -1809,3 +1809,9 @@ components:
       type: http
       scheme: bearer
       description: Bearer authentication header of the form Bearer `<token>`, where `<token>` is your [auth token](/api-reference/v2/general/authentication).
+x-provenance:
+  method: harvested
+  publisher: Glide
+  source: https://api.glideapps.com/swagger.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

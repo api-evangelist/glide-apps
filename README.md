@@ -1,4 +1,4 @@
-# Glide (glide-apps)
+# Glide
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,119 +66,124 @@
 
 Glide is a no-code platform for building custom business apps from your data. The Glide REST API (v2) lets you programmatically work with Glide Big Tables - creating tables, listing and paginating rows, adding, updating, and deleting rows, staging large batches with stashes, and querying tables with SQL - using a Bearer API token.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/glide-apps/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/glide-apps/refs/heads/main/apis.yml)
+**Areas:** No-Code · App Builder · Tables · Big Tables · Data · Artificial Intelligence
 
-## Tags
+## Glide on APIs.io
 
-- No Code
-- App Builder
-- Tables
-- Big Tables
-- Data
-- AI
+Everything profiled for Glide is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/glide-apps/](https://apis.io/providers/glide-apps/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (4)
 
-- **Created:** 2026-06-20
-- **Modified:** 2026-06-20
+- [Glide Queries API](https://apis.io/apis/glide-apps/glide-apps-queries-api/) — Query a Big Table with SQL.
+- [Glide Rows API](https://apis.io/apis/glide-apps/glide-apps-rows-api/) — List, read, add, update, and delete rows in a Big Table.
+- [Glide Stashes API](https://apis.io/apis/glide-apps/glide-apps-stashes-api/) — Stage large data payloads in serial chunks for bulk loads.
+- [Glide Tables API](https://apis.io/apis/glide-apps/glide-apps-tables-api/) — Create, overwrite, and list Big Tables.
 
-## APIs
+### Published properties
 
-### Glide Tables API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Create and overwrite Glide Big Tables in a team, defining columns and optionally seeding data, and discover the tables available to an API token.
+#### Agentic access (1)
 
-- **Human URL:** [https://apidocs.glideapps.com/api-reference/v2](https://apidocs.glideapps.com/api-reference/v2)
-- **Base URL:** `https://api.glideapps.com`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Glide Apps Agentic Access](https://apis.io/agentic-access/glide-apps/glide-apps-agentic-access/)
 
-- Tables
-- Big Tables
-- Schema
+#### Collections (5)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://www.glideapps.com/docs/using-glide-tables-api)
-- [API Reference](https://apidocs.glideapps.com/api-reference/v2/tables/post-tables)
-- [OpenAPI](openapi/glide-apps-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/glide-apps.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/glide-apps.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Glide API](https://apis.io/collections/glide-apps/open-glide-apps/)
+- [Glide Queries API](https://apis.io/collections/glide-apps/open-glide-apps-queries-api/)
+- [Glide Queries Rows API](https://apis.io/collections/glide-apps/open-glide-apps-rows-api/)
+- [Glide Queries Stashes API](https://apis.io/collections/glide-apps/open-glide-apps-stashes-api/)
+- [Glide Queries Tables API](https://apis.io/collections/glide-apps/open-glide-apps-tables-api/)
 
-### Glide Big Tables Rows API
+#### Security (3)
 
-List rows from a Big Table with continuation-token pagination (max 10K rows per response), read a single row by ID, add rows, patch an existing row, and delete a row, with optional ETag/If-Match data versioning.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://apidocs.glideapps.com/api-reference/v2](https://apidocs.glideapps.com/api-reference/v2)
-- **Base URL:** `https://api.glideapps.com`
+- [Glide Apps Authentication](https://apis.io/security/glide-apps/glide-apps-authentication/)
+- [Glide Apps Domain Security](https://apis.io/security/glide-apps/glide-apps-domain-security/)
+- [Glide Apps Trust Center](https://apis.io/security/glide-apps/glide-apps-trust-center/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Rows
-- CRUD
-- Pagination
+Published plans, tiers and prices.
 
-#### Properties
+- [Glide Apps Plans Pricing](https://apis.io/plans/glide-apps/glide-apps-plans-pricing/)
 
-- [Documentation](https://www.glideapps.com/docs/using-glide-tables-api)
-- [API Reference](https://apidocs.glideapps.com/api-reference/v2)
-- [OpenAPI](openapi/glide-apps-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/glide-apps.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/glide-apps.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### Glide Stash & Bulk API
+Published request limits.
 
-Stage large data payloads in serial chunks via stashes, then reference the stash when creating a table or adding rows so very large batches can be loaded without oversized request bodies; delete a stash when finished.
+- [Glide Apps Rate Limits](https://apis.io/rate-limits/glide-apps/glide-apps-rate-limits/)
 
-- **Human URL:** [https://apidocs.glideapps.com/api-reference/v2](https://apidocs.glideapps.com/api-reference/v2)
-- **Base URL:** `https://api.glideapps.com`
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Stash
-- Bulk
-- Batch
+- [Glide Apps Finops](https://apis.io/finops/glide-apps/glide-apps-finops/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://www.glideapps.com/docs/using-glide-tables-api)
-- [API Reference](https://apidocs.glideapps.com/api-reference/v2)
-- [OpenAPI](openapi/glide-apps-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/glide-apps.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/glide-apps.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### Glide Queries API
-
-Query a Big Table with SQL (SELECT with WHERE/AND/OR and parameter binding) to retrieve filtered, server-side result sets, with continuation support for large results. Available on Business and Enterprise plans.
-
-- **Human URL:** [https://apidocs.glideapps.com/api-reference/v2](https://apidocs.glideapps.com/api-reference/v2)
-- **Base URL:** `https://api.glideapps.com`
-
-#### Tags
-
-- Queries
-- SQL
-- Filter
-
-#### Properties
-
-- [Documentation](https://www.glideapps.com/docs/getting-started-with-the-glide-api)
-- [API Reference](https://apidocs.glideapps.com/api-reference/v2)
-- [OpenAPI](openapi/glide-apps-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/glide-apps.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/glide-apps.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/glideapps)
-- [LinkedIn](https://www.linkedin.com/company/glideapps)
 - [Website](https://www.glideapps.com)
 - [Documentation](https://www.glideapps.com/docs)
-- [Plans](plans/glide-apps-plans-pricing.yml)
-- [Rate Limits](rate-limits/glide-apps-rate-limits.yml)
-- [Fin Ops](finops/glide-apps-finops.yml)
+- [Pricing](https://www.glideapps.com/pricing)
+- [Blog](https://www.glideapps.com/blog)
+- [GitHub](https://github.com/glideapps)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 36.5** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 51.1 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 32.1 |
+| Access clarity | 50.0 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 15.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/glide-apps/](https://apis.io/providers/glide-apps/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Glide: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/glide-apps/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
